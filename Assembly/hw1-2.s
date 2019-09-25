@@ -6,7 +6,7 @@
 #		scanf("%d", &v[i]);
 #	}	
 #	min = v[0];
-#	for(i= 0 ; i<10 ; i++){
+#	for(i= 1 ; i<10 ; i++){
 #		if (v[i] < min){
 #			min = v[i];
 #			k= i;
@@ -43,23 +43,22 @@ Lovp:
 
 Second:
 	move $s2, $s1
-	li $t0, 0
+	li $t0, 1
 	la $s3, min
 	la $s4, index
+	sw $0, ($s4)
 	lw $t3, ($s1)
 	sw $t3, ($s3)
 Loop:
 	beq $t0, $s0, Exit
-	lw $t5, ($s2)
+	lw $t5, 4($s2)
 	lw $t6, ($s3)
 	slt $t3, $t5, $t6
 	bne $t3, 0, newMin
 	j finally
 newMin: 
-	add $t4, $0, $t0
-	sw $t4, ($s4)
-	lw $t5 ,($s2)
-	sw $t5 ,($s3)
+	sw $t0, ($s4)
+	sw $t5, ($s3)
 	j finally	
 
 finally:
