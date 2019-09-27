@@ -3,9 +3,9 @@ CFLAGS =
 TARGET1 = Sudoku
 TARGET2 = FillaFix
 TARGET3 = Numbrix
-OBJ1 = pa1.c
-OBJ2 = pa2.c
-OBJ3 = pa3.c
+OBJ1 = pa1-1.c
+OBJ2 = pa1-2.c
+OBJ3 = pa1-3.c
 
 all : $(TARGET1) $(TARGET2) $(TARGET3)
 
