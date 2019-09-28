@@ -18,8 +18,6 @@
 ;각 row, col, 3x3, *위치의 값들이 각각 다르다.
 (assert (distinct a1 a2 a3 a4 a5 a6 a7 a8 a9))
 
-;끝이네
-
 (check-sat)
 (get-model)
 
