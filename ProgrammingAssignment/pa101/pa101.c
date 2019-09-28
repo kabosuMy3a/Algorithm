@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int receiveInputChar(char inputArray[][9]);
-void testInput(char inputArray[][9]);
+void input2Grid(char inputArray[][9]);
 void printOutput(int outputArray[][9]);
 
 
@@ -17,9 +18,9 @@ int main(int argc, char* args[]){
 		printf("Star should not be more than 9\n");
 		return -1;
 	}
-	testInput(inputArray);
+	input2Grid(inputArray);
 	
-	FILE * fp = fopen("Z3udoku","w");
+	FILE * fp = fopen("./pa101/Z3udoku","w");
 	int i,j ;
 
 	for(i = 0 ; i< 9 ; i++){
@@ -101,11 +102,55 @@ int main(int argc, char* args[]){
 		fprintf(fp, "))\n");
 	}
 
-
-
 	fprintf(fp,"\n(check-sat)\n(get-model)\n");
-	//printOutput(char outputArray);
 	fclose(fp);
+
+	FILE * fin = popen("z3 ./pa101/Z3udoku > ./pa101/rawdoku", "r");
+	char buf[128] ;
+	fscanf(fin, "%s %s", buf, buf);
+	while(!feof(fin)){
+		fscanf(fin, "%s", buf) ; 
+	}
+	pclose(fin);
+
+	FILE * rst = fopen("./pa101/rawdoku","r");
+	char bury[128] ;
+	char gi[128] ;
+	char nv[128];
+
+	fscanf(rst, "%s", bury);
+	if(bury[0]=='u'){
+		printf("%s\n",bury);
+		while(1){
+			fscanf(rst,"%s",bury); 
+			if(!feof(rst)) printf("%s ",bury);
+			else break;
+		}
+		printf("\n");
+		printf("There is no solution for your SUDOKU\n");
+		pclose(rst);
+		return -1;
+	}
+	else{
+		fscanf(rst, "%s",bury);
+		for(int k =0 ; k<81 ; k++){	
+			fscanf(rst,"%s %s %s %s %s", bury, gi, bury, bury, nv);
+			
+			int gridRow, gridCol, numVal;
+			char rt[2], ct[2], nt[2]  ;
+			rt[0]= gi[1]; rt[1]= 0x0;
+			ct[0]= gi[2]; ct[1]= 0x0;
+			nt[0]= nv[0]; nt[1]= 0x0;
+			gridRow= atoi(rt);
+			gridCol= atoi(ct);
+			numVal= atoi(nt);
+
+			outputArray[gridRow][gridCol] = numVal;
+		}
+	}
+	pclose(rst);
+
+	printOutput(outputArray);
 
 	return 0;
 }
@@ -132,19 +177,26 @@ int receiveInputChar(char inputArray[][9]){
 	}
 	return num_of_star;
 }
-void testInput(char inputArray[][9]){
+void input2Grid(char inputArray[][9]){
+	FILE * fip = fopen("./pa101/input2Grid.txt","w");
+
 	for(int i = 0 ; i < 9 ; i++){
 		for(int j = 0; j< 9 ; j++){
-			printf("%c ",inputArray[i][j]);
+			fprintf(fip, "%c ",inputArray[i][j]);
 		}
-		printf("\n");
+		fprintf(fip, "\n");
 	}
+	fclose(fip);
 }
 void printOutput(int outputArray[][9]){
+	FILE * output = fopen("./pa101/parsedOutput.txt","w");
 	for(int i = 0 ; i < 9 ; i++){
 		for(int j = 0; j< 9 ; j++){
-			printf("%c ",outputArray[i][j]);
+			fprintf(output,"%d ",outputArray[i][j]);
+			printf("%d ",outputArray[i][j]);
 		}
+		fprintf(output,"\n");
 		printf("\n");
 	}
+	fclose(output);
 }

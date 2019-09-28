@@ -30,3 +30,20 @@ int main ()
 		printf("\n") ;
 	}
 }
+
+sat
+(model
+  (define-fun a55 () Int
+    7)
+  (define-fun a16 () Int
+    5)
+  (define-fun a01 () Int
+    3)
+  (define-fun a36 () Int
+    1)
+  (define-fun a64 () Int
+    1)
+  (define-fun a74 () Int
+    7)
+
+
