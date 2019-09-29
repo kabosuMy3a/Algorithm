@@ -56,9 +56,9 @@ void receiveInputChar(char inputArray[][1000]){
 				inputArray[row_num][coldex++] = c;
 			}
 		}
-		if(row_num==0) col_num = coldex;	
+		if(row_num==0) col_num = coldex;
 		(coldex==col_num) ? row_num++ : 
-			printf("please input correct grid, same column number before you enter\n");
+			(coldex!=0) ? printf("please input correct grid, same column number before you enter\n") : 0x0;
 			//가장자리 처리 제대로 안하면 쓰레기값 생길 수 있음 배열 넘겨서도 받기 때문.
 	}
 }

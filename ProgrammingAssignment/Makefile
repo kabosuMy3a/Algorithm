@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS =
 TARGET1 = Sudoku
-TARGET2 = FillaFix
+TARGET2 = FillaPix
 TARGET3 = Numbrix
 OBJ1 = ./pa101/pa101.c
 OBJ2 = ./pa102/pa102.c
@@ -19,4 +19,4 @@ $(TARGET3) : $(OBJ3)
 	$(CC) $(CFLAGS) $(OPTION) -o $@ $^
 
 clean : 
-	rm Sudoku FillaFix Numbrix
+	rm Sudoku FillaPix Numbrix

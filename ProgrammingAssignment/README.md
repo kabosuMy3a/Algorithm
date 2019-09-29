@@ -11,8 +11,8 @@ We are group 2 in section 2 (mon, fri 6)
 we used Makefile(CMake) as a build tool  
 
 1. Enter "make all" in console where Makefile exists.  
-2. "Sudoku", "FillaFix", and "Numbrix" will be generated in now directory. They are compiled files.  
-3. "Sudoku" is matched pa101. "FillaFix" is matched pa102. "Numbrix" is matced pa103.     
+2. "Sudoku", "FillaPix", and "Numbrix" will be generated in now directory. They are compiled files.  
+3. "Sudoku" is matched pa101. "FillaPix" is matched pa102. "Numbrix" is matced pa103.     
 4. Details of each assginment are written below.  
 
 ## pa101, Sudoku  
@@ -31,7 +31,7 @@ This program receives numbers from 1 to 9 as character. \*, and ? can be entered
 * [parsedOutput](pa101/parsedOutput.txt) - Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
 Custom message "There is no solution for your SUDOKU." is printed with Z3 error message.  
 
-## pa102, FillaFix  
+## pa102, FillaPix  
 
 pa102 receives the input by standard input like pa101. However it's somehow different in entering inputs.     
 **Please tester enter "Ctrl+D" after all inputs are entered**, becuase this puzzle's grid is not fixed.  
