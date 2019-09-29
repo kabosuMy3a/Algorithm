@@ -1,6 +1,6 @@
 # Programming Assignment 1
 
-we are group 2 in section 2 (mon, fri 6)  
+We are group 2 in section 2 (mon, fri 6)  
 '~'  
 '~'  
 '~'  
@@ -17,11 +17,11 @@ we used Makefile(CMake) as a build tool
 
 ### pa101, Sudoku  
 
-####In directory pa101, there are 6 files.   
+#### In directory pa101, there are 6 files.   
 * [pa101.c](pa101/pa101.c) - source code  
 * [SudokuInputExample](pa101/SudokuInputExample.txt) - Input example from Sudoku game for testing.  
 ---  
-#####generated from source code  
+##### generated from source code  
 * [input2Grid](pa101/input2Grid.txt) - Save & Shows input as 9x9 grid.  
 * [Z3udoku](pa101/Z3udoku) - Logic and constraints represented by Z3 syntax for launching Z3  
 * [rawdoku](pa101/rawdoku) - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
