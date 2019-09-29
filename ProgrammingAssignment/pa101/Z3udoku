@@ -120,7 +120,6 @@
 (assert (distinct a66 a67 a68 a76 a77 a78 a86 a87 a88 ))
 
 ;where * is given should have different value
-(assert (distinct a01 a15 ))
 
 (check-sat)
 (get-model)
