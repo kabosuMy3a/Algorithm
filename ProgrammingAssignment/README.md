@@ -25,8 +25,8 @@ we used Makefile(CMake) as a build tool
 * [Z3udoku](pa101/Z3udoku) - Logic and constraints represented by Z3 syntax for launching Z3  
 * [rawdoku](pa101/rawdoku) - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
 * [parsedOutput](pa101/parsedOutput.txt)
--Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
-Custom message "There is no solution in this SUDOKU." is printed with Z3 error message.  
+- Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
+Custom message "There is no solution for your SUDOKU." is printed with Z3 error message.  
 
 ## pa102, FillaFix  
 ## pa103, Numbrix  
