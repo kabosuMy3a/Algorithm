@@ -17,6 +17,10 @@ we used Makefile(CMake) as a build tool
 
 ## pa101, Sudoku  
 
+pa101 receives the input by standard input. Recieve only 81 characters because this puzzle size is fixed.  
+Other puzzles are receives input differently, but this puzzles receives in this way.  
+This program receives numbers from 1 to 9 as character. \*, and ? can be entered.  
+
 #### In directory pa101, there are 6 files.   
 * [pa101.c](pa101/pa101.c) - source code  
 * [SudokuInputExample](pa101/SudokuInputExample.txt) - Input example from Sudoku game for testing.  
@@ -28,5 +32,14 @@ we used Makefile(CMake) as a build tool
 Custom message "There is no solution for your SUDOKU." is printed with Z3 error message.  
 
 ## pa102, FillaFix  
+
+pa102 receives the input by standard input like pa101. However it's somehow different in entering inputs.     
+**Please tester enter "Ctrl+D" after all inputs are entered**, becuase this puzzle's grid is not fixed.  
+This program receives numbers from 0 to 9 as characters. ? can be entered.  
+When this program receives first row of grid, it will set up the column number.  
+So, this program check whether next input's column number is same with first one.  
+When they are different, program makes error message and receives input again.  
+This policies of program are all for making perfect grid.  
+
 ## pa103, Numbrix  
 
