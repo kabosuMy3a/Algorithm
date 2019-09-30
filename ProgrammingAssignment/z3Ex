@@ -9,7 +9,9 @@
 (declare-const a9 Int)
 
 ;from a00 a88 > 0 and < 10
-(assert (and (> a1 0)(> a2 0)(> a3 0)(> a4 0)(> a5 0)(> a6 0)(> a7 0)(> a8 0)(> a9 0)))
+(assert 
+(and 
+	(> a1 0)(> a2 0)(> a3 0)(> a4 0)(> a5 0)(> a6 0)(> a7 0)(> a8 0)(> a9 0)))
 (assert (and (< a1 10)(< a2 10)(< a3 10)(< a4 10)(< a5 10)(< a6 10)(< a7 10)(< a8 10)(< a9 10)))
 
 ;for문 두번 돌려서 배열의 char가 * ?가 아니라 숫자면 assert aij

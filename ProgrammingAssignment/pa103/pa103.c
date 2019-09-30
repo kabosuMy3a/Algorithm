@@ -37,7 +37,7 @@ int main(int argc, char* args[]){
 	}
 	fprintf(fp, "))\n\n");
 	
-	fprintf(fp, ";Every cell never exceed number of grid\n");
+	fprintf(fp, ";Every cell x never exceed number of grid and x > 0\n");
 	fprintf(fp, "(assert (and ");
 	for(i=0 ; i< row_num ; i++){
 		for(j=0; j< col_num; j++){
@@ -55,9 +55,290 @@ int main(int argc, char* args[]){
 	}
 	fprintf(fp, "))\n\n");
 	
-	fprintf(fp, "; x| (x-1 should exist in L||R||U||R)&& x+1 should exist in L||R||U||R\n");
+	fprintf(fp, "; x| (x-1 should exist in L||R||U||D)&& x+1 should exist in L||R||U||R\n");
 	fprintf(fp, "; if x==1, only x+1 && if x==grid_max, only x-1\n");
-	fprintf(fp, "; if x's index has 0 or row-1 or col-1 should be considered\n");
+	fprintf(fp, "; if x's index has 0 or row-1 or col-1 should be considered\n;Impelements\n");
+	fprintf(fp, ";exsist in (LRUD x-1 & LRUD x+1) | (ex LRUD x+1 & x=1) | (ex LRUD x-1 & x = max)\n");
+	fprintf(fp, ";if(i!=0) can check L, if(i!=max) can check R, if(j!=0) can check U, if(j!=max) can check D\n ");
+	fprintf(fp, "(assert (and ");/*all true*/
+	for(i = 0 ; i< row_num ; i ++){
+		for(j = 0 ; j< col_num ; j++){
+			if(i!=0 && i!=(row_num-1) && j!=0 && j!=(col_num-1))/*not margin*/{
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j+1,i,j);/*RIGHT*/	
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j+1,i,j);/*RIGHT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, ")");
+			}
+			if(j ==0 && i== 0)/*LU*/{ 
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j+1,i,j);/*RIGHT*/	
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j+1,i,j);/*RIGHT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, ")");
+			}
+			else if(j ==0 && i==row_num-1)/*LD*/{
+ 
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j+1,i,j);/*RIGHT*/	
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j+1,i,j);/*RIGHT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, ")");
+
+			}
+			else if(j==0)/*L*/{
+ 
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j+1,i,j);/*RIGHT*/	
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j+1,i,j);/*RIGHT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, ")");
+
+			}
+			else if(i==0 && j==(col_num-1))/*UR*/{
+ 
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j-1,i,j);/*LEFT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j-1,i,j);/*LEFT*/
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j-1,i,j);/*LEFT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j-1,i,j);/*LEFT*/
+
+				fprintf(fp, ")");
+
+			}
+			else if(i==0)/*U*/{
+ 
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j+1,i,j);/*RIGHT*/	
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j+1,i,j);/*RIGHT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, ")");
+
+			}
+			else if(i==(row_num-1) && j==(col_num-1))/*DR*/{
+ 
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j-1,i,j);/*LEFT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j-1,i,j);/*LEFT*/
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j-1,i,j);/*LEFT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j-1,i,j);/*LEFT*/
+
+				fprintf(fp, ")");
+
+			}	
+			else if(i==(row_num-1))/*D*/{
+ 
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j+1,i,j);/*RIGHT*/	
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j+1,i,j);/*RIGHT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i,j-1,i,j);/*LEFT*/
+			       	fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j+1,i,j);/*RIGHT*/
+
+				fprintf(fp, ")");
+
+			}
+			else if(j==(col_num-1))/*R*/{
+ 
+				fprintf(fp, "(or ");
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d 1)",i,j);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j-1,i,j);/*LEFT*/
+
+				fprintf(fp, " (and ");
+				fprintf(fp, "(= r%dc%d %d)",i,j,grid_num);
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))))",i,j-1,i,j);/*LEFT*/
+			
+				fprintf(fp, " (and ");
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d -1)))",i,j-1,i,j);/*LEFT*/
+				
+				fprintf(fp, "(or ");
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i-1,j,i,j);/*UP*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))",i+1,j,i,j);/*DOWN*/
+				fprintf(fp, "(= r%dc%d (+ r%dc%d 1))))",i,j-1,i,j);/*LEFT*/
+
+				fprintf(fp, ")");
+
+			}
+		}
+	}
+	fprintf(fp, "))\n");
+
 
 	fprintf(fp, "\n(check-sat)\n");
 	fprintf(fp, "(get-model)");
