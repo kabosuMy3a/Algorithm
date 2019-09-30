@@ -29,7 +29,7 @@ This program receives numbers from 1 to 9 as character. \*, and ? can be entered
 * [Z3udoku](pa101/Z3udoku) - Logic and constraints represented by Z3 syntax for launching Z3  
 * [rawdoku](pa101/rawdoku) - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
 * [parsedOutput](pa101/parsedOutput.txt) - Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
-Custom message "There is no solution for your SUDOKU." is printed with Z3 error message.  
+"No solution." is printed.  
 
 ## pa102, FillaPix  
 

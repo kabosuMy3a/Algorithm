@@ -53,10 +53,15 @@ void receiveInputChar(char inputArray[][1000]){
 			//pa103에서는 valid 다르게 받아야 함. 10이상의 숫자도 받기 때문. 
 			char c = lines[i];
 			if((c>=48 && c<= 57) || c==63){
-				inputArray[row_num][coldex++] = c;
+				if(coldex < 1000) inputArray[row_num][coldex++] = c;
+				else coldex = 1000;
 			}
 		}
 		if(row_num==0) col_num = coldex;
+		if(row_num==999){
+			row_num++;
+			break;
+		}
 		(coldex==col_num) ? row_num++ : 
 			(coldex!=0) ? printf("please input correct grid, same column number before you enter\n") : 0x0;
 			//가장자리 처리 제대로 안하면 쓰레기값 생길 수 있음 배열 넘겨서도 받기 때문.

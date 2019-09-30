@@ -120,16 +120,17 @@ int main(int argc, char* args[]){
 
 	fscanf(rst, "%s", bury);
 	if(bury[0]=='u'){
+		/*
 		printf("%s\n",bury);
 		while(1){
 			fscanf(rst,"%s",bury); 
 			if(!feof(rst)) printf("%s ",bury);
 			else break;
 		}
-		printf("\n");
-		printf("There is no solution for your SUDOKU\n");
+		printf("\n");*/
+		printf("No Solution\n");
 		pclose(rst);
-		return -1;
+		return 0;
 	}
 	else{
 		fscanf(rst, "%s",bury);

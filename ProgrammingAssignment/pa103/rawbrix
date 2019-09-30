@@ -1,0 +1,227 @@
+sat
+(model 
+  (define-fun r4c1 () Int
+    62)
+  (define-fun r6c5 () Int
+    48)
+  (define-fun r10c2 () Int
+    82)
+  (define-fun r5c6 () Int
+    111)
+  (define-fun r0c6 () Int
+    44)
+  (define-fun r0c4 () Int
+    40)
+  (define-fun r1c5 () Int
+    89)
+  (define-fun r13c7 () Int
+    95)
+  (define-fun r7c6 () Int
+    35)
+  (define-fun r4c4 () Int
+    58)
+  (define-fun r10c7 () Int
+    109)
+  (define-fun r6c1 () Int
+    49)
+  (define-fun r3c2 () Int
+    68)
+  (define-fun r3c3 () Int
+    72)
+  (define-fun r2c2 () Int
+    63)
+  (define-fun r12c5 () Int
+    93)
+  (define-fun r7c7 () Int
+    41)
+  (define-fun r7c1 () Int
+    96)
+  (define-fun r11c6 () Int
+    52)
+  (define-fun r11c4 () Int
+    83)
+  (define-fun r1c6 () Int
+    21)
+  (define-fun r3c0 () Int
+    51)
+  (define-fun r12c0 () Int
+    30)
+  (define-fun r10c6 () Int
+    15)
+  (define-fun r7c3 () Int
+    71)
+  (define-fun r9c7 () Int
+    57)
+  (define-fun r12c2 () Int
+    99)
+  (define-fun r9c5 () Int
+    84)
+  (define-fun r0c2 () Int
+    42)
+  (define-fun r8c1 () Int
+    101)
+  (define-fun r8c4 () Int
+    39)
+  (define-fun r10c5 () Int
+    60)
+  (define-fun r0c5 () Int
+    77)
+  (define-fun r8c0 () Int
+    14)
+  (define-fun r2c7 () Int
+    37)
+  (define-fun r6c2 () Int
+    69)
+  (define-fun r6c4 () Int
+    87)
+  (define-fun r5c3 () Int
+    64)
+  (define-fun r0c3 () Int
+    112)
+  (define-fun r5c1 () Int
+    61)
+  (define-fun r3c6 () Int
+    70)
+  (define-fun r6c6 () Int
+    34)
+  (define-fun r13c6 () Int
+    27)
+  (define-fun r10c4 () Int
+    28)
+  (define-fun r5c0 () Int
+    90)
+  (define-fun r9c0 () Int
+    79)
+  (define-fun r9c4 () Int
+    47)
+  (define-fun r7c0 () Int
+    73)
+  (define-fun r4c0 () Int
+    59)
+  (define-fun r6c0 () Int
+    17)
+  (define-fun r9c3 () Int
+    91)
+  (define-fun r0c0 () Int
+    98)
+  (define-fun r4c5 () Int
+    105)
+  (define-fun r13c3 () Int
+    32)
+  (define-fun r11c1 () Int
+    74)
+  (define-fun r11c7 () Int
+    104)
+  (define-fun r8c5 () Int
+    22)
+  (define-fun r1c1 () Int
+    45)
+  (define-fun r0c7 () Int
+    7)
+  (define-fun r10c0 () Int
+    86)
+  (define-fun r11c5 () Int
+    108)
+  (define-fun r2c3 () Int
+    76)
+  (define-fun r7c5 () Int
+    53)
+  (define-fun r4c6 () Int
+    54)
+  (define-fun r5c7 () Int
+    80)
+  (define-fun r7c2 () Int
+    94)
+  (define-fun r5c2 () Int
+    92)
+  (define-fun r12c6 () Int
+    103)
+  (define-fun r13c2 () Int
+    110)
+  (define-fun r9c6 () Int
+    46)
+  (define-fun r8c6 () Int
+    11)
+  (define-fun r1c7 () Int
+    97)
+  (define-fun r5c4 () Int
+    107)
+  (define-fun r4c7 () Int
+    106)
+  (define-fun r0c1 () Int
+    85)
+  (define-fun r11c0 () Int
+    19)
+  (define-fun r2c5 () Int
+    102)
+  (define-fun r6c3 () Int
+    43)
+  (define-fun r5c5 () Int
+    5)
+  (define-fun r10c3 () Int
+    8)
+  (define-fun r13c5 () Int
+    78)
+  (define-fun r2c0 () Int
+    88)
+  (define-fun r6c7 () Int
+    29)
+  (define-fun r9c1 () Int
+    33)
+  (define-fun r1c0 () Int
+    56)
+  (define-fun r10c1 () Int
+    24)
+  (define-fun r7c4 () Int
+    31)
+  (define-fun r13c0 () Int
+    65)
+  (define-fun r3c5 () Int
+    81)
+  (define-fun r8c3 () Int
+    18)
+  (define-fun r8c2 () Int
+    75)
+  (define-fun r9c2 () Int
+    67)
+  (define-fun r12c3 () Int
+    38)
+  (define-fun r12c7 () Int
+    6)
+  (define-fun r2c6 () Int
+    66)
+  (define-fun r8c7 () Int
+    12)
+  (define-fun r3c7 () Int
+    16)
+  (define-fun r1c4 () Int
+    100)
+  (define-fun r13c4 () Int
+    50)
+  (define-fun r13c1 () Int
+    55)
+  (define-fun r12c4 () Int
+    4)
+  (define-fun r12c1 () Int
+    3)
+  (define-fun r11c3 () Int
+    2)
+  (define-fun r11c2 () Int
+    1)
+  (define-fun r4c3 () Int
+    36)
+  (define-fun r4c2 () Int
+    23)
+  (define-fun r3c4 () Int
+    10)
+  (define-fun r3c1 () Int
+    25)
+  (define-fun r2c4 () Int
+    9)
+  (define-fun r2c1 () Int
+    26)
+  (define-fun r1c3 () Int
+    13)
+  (define-fun r1c2 () Int
+    20)
+)
