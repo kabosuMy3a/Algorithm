@@ -1,0 +1,291 @@
+sat
+(model 
+  (define-fun r4c1 () Int
+    0)
+  (define-fun r6c5 () Int
+    0)
+  (define-fun r10c2 () Int
+    0)
+  (define-fun r5c6 () Int
+    0)
+  (define-fun r5c12 () Int
+    0)
+  (define-fun r2c8 () Int
+    0)
+  (define-fun r12c12 () Int
+    1)
+  (define-fun r1c5 () Int
+    0)
+  (define-fun r1c12 () Int
+    0)
+  (define-fun r11c12 () Int
+    0)
+  (define-fun r7c6 () Int
+    0)
+  (define-fun r4c11 () Int
+    0)
+  (define-fun r8c10 () Int
+    0)
+  (define-fun r3c10 () Int
+    0)
+  (define-fun r9c11 () Int
+    0)
+  (define-fun r10c7 () Int
+    0)
+  (define-fun r5c9 () Int
+    0)
+  (define-fun r6c1 () Int
+    0)
+  (define-fun r11c9 () Int
+    0)
+  (define-fun r3c2 () Int
+    0)
+  (define-fun r2c2 () Int
+    1)
+  (define-fun r11c10 () Int
+    0)
+  (define-fun r12c5 () Int
+    0)
+  (define-fun r7c7 () Int
+    0)
+  (define-fun r2c1 () Int
+    0)
+  (define-fun r10c9 () Int
+    0)
+  (define-fun r7c12 () Int
+    0)
+  (define-fun r7c1 () Int
+    0)
+  (define-fun r11c6 () Int
+    0)
+  (define-fun r12c10 () Int
+    0)
+  (define-fun r10c12 () Int
+    0)
+  (define-fun r11c8 () Int
+    0)
+  (define-fun r1c6 () Int
+    0)
+  (define-fun r2c11 () Int
+    0)
+  (define-fun r6c9 () Int
+    0)
+  (define-fun r3c12 () Int
+    0)
+  (define-fun r5c10 () Int
+    0)
+  (define-fun r10c6 () Int
+    0)
+  (define-fun r7c3 () Int
+    1)
+  (define-fun r10c11 () Int
+    0)
+  (define-fun r7c10 () Int
+    0)
+  (define-fun r9c7 () Int
+    0)
+  (define-fun r12c2 () Int
+    0)
+  (define-fun r4c9 () Int
+    0)
+  (define-fun r8c1 () Int
+    0)
+  (define-fun r12c1 () Int
+    0)
+  (define-fun r4c12 () Int
+    0)
+  (define-fun r3c11 () Int
+    0)
+  (define-fun r8c4 () Int
+    1)
+  (define-fun r2c7 () Int
+    0)
+  (define-fun r6c2 () Int
+    0)
+  (define-fun r6c11 () Int
+    0)
+  (define-fun r5c8 () Int
+    0)
+  (define-fun r6c4 () Int
+    0)
+  (define-fun r8c11 () Int
+    0)
+  (define-fun r7c9 () Int
+    0)
+  (define-fun r5c11 () Int
+    0)
+  (define-fun r5c1 () Int
+    0)
+  (define-fun r6c10 () Int
+    0)
+  (define-fun r3c6 () Int
+    0)
+  (define-fun r6c6 () Int
+    0)
+  (define-fun r1c9 () Int
+    0)
+  (define-fun r10c8 () Int
+    0)
+  (define-fun r4c2 () Int
+    0)
+  (define-fun r11c11 () Int
+    0)
+  (define-fun r1c2 () Int
+    1)
+  (define-fun r1c8 () Int
+    0)
+  (define-fun r8c9 () Int
+    0)
+  (define-fun r11c1 () Int
+    0)
+  (define-fun r11c7 () Int
+    0)
+  (define-fun r8c5 () Int
+    0)
+  (define-fun r1c1 () Int
+    1)
+  (define-fun r2c10 () Int
+    0)
+  (define-fun r12c8 () Int
+    0)
+  (define-fun r4c8 () Int
+    0)
+  (define-fun r2c3 () Int
+    1)
+  (define-fun r7c5 () Int
+    0)
+  (define-fun r4c6 () Int
+    0)
+  (define-fun r3c9 () Int
+    0)
+  (define-fun r7c2 () Int
+    1)
+  (define-fun r2c12 () Int
+    0)
+  (define-fun r5c2 () Int
+    0)
+  (define-fun r5c7 () Int
+    0)
+  (define-fun r12c6 () Int
+    0)
+  (define-fun r11c2 () Int
+    0)
+  (define-fun r1c10 () Int
+    0)
+  (define-fun r4c10 () Int
+    0)
+  (define-fun r9c12 () Int
+    0)
+  (define-fun r7c11 () Int
+    0)
+  (define-fun r12c4 () Int
+    0)
+  (define-fun r9c6 () Int
+    0)
+  (define-fun r8c8 () Int
+    0)
+  (define-fun r8c6 () Int
+    0)
+  (define-fun r1c7 () Int
+    0)
+  (define-fun r9c9 () Int
+    0)
+  (define-fun r10c10 () Int
+    0)
+  (define-fun r4c7 () Int
+    0)
+  (define-fun r2c5 () Int
+    0)
+  (define-fun r1c11 () Int
+    0)
+  (define-fun r6c3 () Int
+    0)
+  (define-fun r7c8 () Int
+    0)
+  (define-fun r12c11 () Int
+    0)
+  (define-fun r8c12 () Int
+    0)
+  (define-fun r6c7 () Int
+    0)
+  (define-fun r9c1 () Int
+    0)
+  (define-fun r6c8 () Int
+    0)
+  (define-fun r10c1 () Int
+    0)
+  (define-fun r12c9 () Int
+    0)
+  (define-fun r7c4 () Int
+    0)
+  (define-fun r8c3 () Int
+    1)
+  (define-fun r9c2 () Int
+    1)
+  (define-fun r8c2 () Int
+    1)
+  (define-fun r9c8 () Int
+    0)
+  (define-fun r9c10 () Int
+    0)
+  (define-fun r2c9 () Int
+    0)
+  (define-fun r12c3 () Int
+    0)
+  (define-fun r2c6 () Int
+    0)
+  (define-fun r8c7 () Int
+    0)
+  (define-fun r2c4 () Int
+    1)
+  (define-fun r3c7 () Int
+    0)
+  (define-fun r1c4 () Int
+    1)
+  (define-fun r3c8 () Int
+    0)
+  (define-fun r6c12 () Int
+    0)
+  (define-fun r12c7 () Int
+    0)
+  (define-fun r3c1 () Int
+    0)
+  (define-fun r1c3 () Int
+    1)
+  (define-fun r11c5 () Int
+    1)
+  (define-fun r11c4 () Int
+    1)
+  (define-fun r11c3 () Int
+    1)
+  (define-fun r10c5 () Int
+    1)
+  (define-fun r9c5 () Int
+    1)
+  (define-fun r9c4 () Int
+    1)
+  (define-fun r9c3 () Int
+    1)
+  (define-fun r10c3 () Int
+    1)
+  (define-fun r5c5 () Int
+    1)
+  (define-fun r5c4 () Int
+    1)
+  (define-fun r5c3 () Int
+    1)
+  (define-fun r4c5 () Int
+    1)
+  (define-fun r3c5 () Int
+    1)
+  (define-fun r3c4 () Int
+    1)
+  (define-fun r3c3 () Int
+    1)
+  (define-fun r4c3 () Int
+    1)
+  (define-fun r10c4 () Int
+    1)
+  (define-fun r4c4 () Int
+    1)
+)
