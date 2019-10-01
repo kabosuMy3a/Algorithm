@@ -1,53 +1,41 @@
 # Programming Assignment 1
 
 We are group 2 in section 2 (mon, fri 6)  
-'~'  
-'~'  
-'~'  
-21500800 HongSungyu  
+21300362 Sangwon Seo, 21300858 Youngjae Kim  
+21400667 Byoungun Jeon, 21500800 Sungyu Hong    
 
 ## Build & Excute
 
 we used Makefile(CMake) as a build tool  
 
-1. Enter "make all" in console where Makefile exists.  
+1. Enter "make all" in console where Makefile exists. Then Build tool compiles C code with gcc.
 2. "Sudoku", "FillaPix", and "Numbrix" will be generated in now directory. They are compiled files.  
 3. "Sudoku" is matched pa101. "FillaPix" is matched pa102. "Numbrix" is matced pa103.     
-4. Details of each assginment are written below.  
 
-## PA101 - Sudoku !
+## Entering the Input 
 
-pa101 receives the input by standard input. Recieve only 81 characters because this puzzle size is fixed.  
-Other puzzles are receives input differently, but this puzzles receives in this way.  
-This program receives numbers from 1 to 9 as character. \*, and ? can be entered.  
+All program receives the inputs by standard input. 
 
-#### In directory pa101, there will be 5 files after program finished.    
-* [pa101.c](pa101/pa101.c) - source code  
-##### below 4 files are generated from source code  
-* input2Grid - Save & Shows input as 9x9 grid.  
-* Z3udoku- Logic and constraints represented by Z3 syntax for launching Z3  
-* rawdoku - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
-* parsedOutput - Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
-"No solution." is printed.  
+"Sudoku" receives numbers from 1 to 9. \*, and ? can be entered. Other charters are ignored. 
+Sudoku's inputs are fixed in 81 characters, so Standard inputs are terminated when 9x9 grid is made.   
 
-## PA102 - Fill a Pix !
+Otherwise, "Fill a Pix" and "Numbrix", their grid size is not fixed. Program doesn't know whether EOF. 
+**So, please tester enter ```"Ctrl+D"``` after all inputs are entered**  
 
-pa102 receives the input by standard input like pa101. However it's somehow different in entering inputs.     
-**Please tester enter "Ctrl+D" after all inputs are entered**, becuase this puzzle's grid is not fixed.  
-This program receives initial numbers from 0 to 9 as characters. ? can be entered for undefined value.  
-When this program receives first row of grid, it will set up the column number.  
+"Fill a Pix" receives initial numbers from 0 to 9. ? can be entered for undefined value.
+"Numbrix" receives intial numbers from 1 to MAX, MAX means the number of cells. ? can be entered.  
+When these two programs receive first row of grid, it will set up the column number.  
 So, this program check whether next input's column number is same with first one.  
 When they are different, program makes error message and receives input again.  
-This policies of program are all for making perfect grid.  
 
-1. Input your data that you want to solve (For example..)
+## Example
 
-``` $ ./FillaFix ```
+1. Build with Makefile.
+```$ make all ```
 
-Input the data you want to solve.
-
+2. Input your data that you want to solve
 ```
-  $./FillaFix         
+  $ ./FillaFix         
       ? ? ? ? 2   
       ? 9 ? ? ?  
       ? 8 8 ? ?  
@@ -55,14 +43,20 @@ Input the data you want to solve.
       4 ? 5 ? 2   
 ```
 
-2. Press ```CTRL+D``` After you finished putting data.
+3. Press ```CTRL+D``` After you finished putting data.
 
 
-3. You can get the result up to 5.
- 
+4. You can get the result up to 5.
+
 -    If you don't have any solution, it will print "No solution"
--    If you have solutions below 5, it will print all but print "No solution" at last.
+-    If you have solutions below 5, it will print all but print "No solution" at last.  
 
+## Files 
 
-## PA103 - Numbrix !
+* [pa101.c](pa101/pa101.c) - source code  
 
+* input2Grid - Save & Shows input as 9x9 grid.  
+* Z3udoku- Logic and constraints represented by Z3 syntax for launching Z3  
+* rawdoku - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
+* parsedOutput - Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
+"No solution." is printed.  
