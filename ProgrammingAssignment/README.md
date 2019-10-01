@@ -2,9 +2,9 @@
 
 We are group 2 in section 2 (mon, fri 6)  
 
-21300362 Sangwon Seo
+21300362 Sangwon Seo  
 21300858 Youngjae Kim  
-21400667 Byoungun Jeon
+21400667 Byoungun Jeon  
 21500800 Sungyu Hong    
 
 ## Build & Excute
