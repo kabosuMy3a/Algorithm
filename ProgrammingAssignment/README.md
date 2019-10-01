@@ -63,4 +63,4 @@ When they are different, program makes error message and receives input again.
 - Save & Shows input as grid.  
 - Logic and constraints represented by Z3 syntax for launching Z3  
 - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
-- Parsed info also printed in stdout from rawdoku.  
+- Parsed info also printed in console. 
