@@ -24,10 +24,10 @@ This program receives numbers from 1 to 9 as character. \*, and ? can be entered
 #### In directory pa101, there will be 5 files after program finished.    
 * [pa101.c](pa101/pa101.c) - source code  
 ##### below 4 files are generated from source code  
-* [input2Grid](pa101/input2Grid.txt) - Save & Shows input as 9x9 grid.  
-* [Z3udoku](pa101/Z3udoku) - Logic and constraints represented by Z3 syntax for launching Z3  
-* [rawdoku](pa101/rawdoku) - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
-* [parsedOutput](pa101/parsedOutput.txt) - Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
+* input2Grid - Save & Shows input as 9x9 grid.  
+* Z3udoku- Logic and constraints represented by Z3 syntax for launching Z3  
+* rawdoku - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
+* parsedOutput - Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
 "No solution." is printed.  
 
 ## PA102 - Fill a Pix !
