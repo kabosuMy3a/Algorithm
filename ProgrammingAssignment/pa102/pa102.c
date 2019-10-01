@@ -242,7 +242,6 @@ int main(){
             Output[q][w]=0;
         }
     }
-       
        printf("<<Solution %d>>\n\n", n+1);
        for(int i=1; i<=N; i++){
            for(int j=1; j<=M; j++){

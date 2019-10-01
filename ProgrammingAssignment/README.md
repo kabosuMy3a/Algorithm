@@ -21,9 +21,8 @@ pa101 receives the input by standard input. Recieve only 81 characters because t
 Other puzzles are receives input differently, but this puzzles receives in this way.  
 This program receives numbers from 1 to 9 as character. \*, and ? can be entered.  
 
-#### In directory pa101, there are 6 files.   
+#### In directory pa101, there will be 5 files after program finished.    
 * [pa101.c](pa101/pa101.c) - source code  
-* [SudokuInputExample](pa101/SudokuInputExample.txt) - Input example from Sudoku game for testing.  
 ##### below 4 files are generated from source code  
 * [input2Grid](pa101/input2Grid.txt) - Save & Shows input as 9x9 grid.  
 * [Z3udoku](pa101/Z3udoku) - Logic and constraints represented by Z3 syntax for launching Z3  
@@ -35,35 +34,31 @@ This program receives numbers from 1 to 9 as character. \*, and ? can be entered
 
 pa102 receives the input by standard input like pa101. However it's somehow different in entering inputs.     
 **Please tester enter "Ctrl+D" after all inputs are entered**, becuase this puzzle's grid is not fixed.  
-This program receives numbers from 0 to 9 as characters. ? can be entered.  
+This program receives initial numbers from 0 to 9 as characters. ? can be entered for undefined value.  
 When this program receives first row of grid, it will set up the column number.  
 So, this program check whether next input's column number is same with first one.  
 When they are different, program makes error message and receives input again.  
 This policies of program are all for making perfect grid.  
 
+1. Input your data that you want to solve (For example..)
 
-1. Compile pix_lia.c.
-
-``` $ g++ pix_lia.c -o pix ```
-
-2. Input your data that you want to solve (For example..)
-
-``` $ ./pix ```
+``` $ ./FillaFix ```
 
 Input the data you want to solve.
 
 ```
-    $ ? ? ? ? 2  
-      ? 9 ? ? ?
-      ? 8 8 ? ?
-      ? ? ? ? 4
+  $./FillaFix         
+      ? ? ? ? 2   
+      ? 9 ? ? ?  
+      ? 8 8 ? ?  
+      ? ? ? ? 4  
       4 ? 5 ? 2   
 ```
 
-3. Press ```CTRL+D``` After you finished putting data.
+2. Press ```CTRL+D``` After you finished putting data.
 
 
-4. You can get the result up to 5.
+3. You can get the result up to 5.
  
 -    If you don't have any solution, it will print "No solution"
 -    If you have solutions below 5, it will print all but print "No solution" at last.
