@@ -38,7 +38,7 @@ When they are different, program makes error message and receives input again.
 
 2. Input your data that you want to solve
 ```
-  $ ./FillaFix         
+  $ ./FillaPix         
       ? ? ? ? 2   
       ? 9 ? ? ?  
       ? 8 8 ? ?  
@@ -49,10 +49,10 @@ When they are different, program makes error message and receives input again.
 3. Press ```CTRL+D``` After you finished putting data.
 
 
-4. You can get the result up to 5.
+4. You can get the result.
 
--    If you don't have any solution, it will print "No solution"
--    If you have solutions below 5, it will print all but print "No solution" at last.  
+-    If puzzle don't have any solution, it will print "No solution"
+-    If puzzle have a solution, it will be printed. Only "FIll a Pix" prints 5 solutions.
 
 ## Files 
 
