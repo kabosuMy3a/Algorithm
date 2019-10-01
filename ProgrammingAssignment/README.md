@@ -1,8 +1,11 @@
 # Programming Assignment 1
 
 We are group 2 in section 2 (mon, fri 6)  
-21300362 Sangwon Seo, 21300858 Youngjae Kim  
-21400667 Byoungun Jeon, 21500800 Sungyu Hong    
+
+21300362 Sangwon Seo
+21300858 Youngjae Kim  
+21400667 Byoungun Jeon
+21500800 Sungyu Hong    
 
 ## Build & Excute
 
@@ -16,13 +19,13 @@ we used Makefile(CMake) as a build tool
 
 All program receives the inputs by standard input. 
 
-"Sudoku" receives numbers from 1 to 9. \*, and ? can be entered. Other charters are ignored. 
+"Sudoku" receives numbers from 1 to 9. \*, and ? can be entered. Other charters are ignored.  
 Sudoku's inputs are fixed in 81 characters, so Standard inputs are terminated when 9x9 grid is made.   
 
-Otherwise, "Fill a Pix" and "Numbrix", their grid size is not fixed. Program doesn't know whether EOF. 
+Otherwise, "Fill a Pix" and "Numbrix", their grid size is not fixed. Program doesn't know whether EOF.   
 **So, please tester enter ```"Ctrl+D"``` after all inputs are entered**  
 
-"Fill a Pix" receives initial numbers from 0 to 9. ? can be entered for undefined value.
+"Fill a Pix" receives initial numbers from 0 to 9. ? can be entered for undefined value.  
 "Numbrix" receives intial numbers from 1 to MAX, MAX means the number of cells. ? can be entered.  
 When these two programs receive first row of grid, it will set up the column number.  
 So, this program check whether next input's column number is same with first one.  
@@ -53,10 +56,11 @@ When they are different, program makes error message and receives input again.
 
 ## Files 
 
-* [pa101.c](pa101/pa101.c) - source code  
+* [Makefile](Makefile) - Build script for CMake  
+* [\[pa101.c\]](pa101/pa101.c)[\[pa102.c\]](pa102/pa102.c)[\[pa\]](pa103/pa103.c) - source codes. They are in each of folders.  
 
-* input2Grid - Save & Shows input as 9x9 grid.  
-* Z3udoku- Logic and constraints represented by Z3 syntax for launching Z3  
-* rawdoku - Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
-* parsedOutput - Parsed info also printed in stdout from rawdoku. If input makes constraints unsatisfiable,  
-"No solution." is printed.  
+After excute program. Below kinds of programs are generated in each program folders where source code is in.  
+- Save & Shows input as grid.  
+- Logic and constraints represented by Z3 syntax for launching Z3  
+- Raw output from Z3 launched inside C program. Model is given if satisfiable, else error is given.    
+- Parsed info also printed in stdout from rawdoku.  
