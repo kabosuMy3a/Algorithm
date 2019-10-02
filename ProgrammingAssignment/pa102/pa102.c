@@ -20,21 +20,29 @@ void printCombination(int arr[], int n, int r, int k, int j, int N, int M, FILE 
     combinationUtil(arr, data, 0, n-1, 0, r, k, j, N, M, fp); 
 } 
   
-/* arr[]  ---> Input Array 
-   data[] ---> Temporary array to store current combination 
-   start & end ---> Staring and Ending indexes in arr[] 
-   index  ---> Current index in data[] 
-   r ---> Size of a combination to be printed */
+
 void combinationUtil(int arr[], int data[], int start, int end, 
                      int index, int r, int k, int j, int N, int M, FILE *fp) 
 { 
-    // Current combination is ready to be printed, print it
+
     int x[9]={0, 0, -1, -1, -1, 0, 1, 1, 1};
     int y[9]={0, -1, -1, 0, 1, 1, -1, 0, 1}; 
     
 
-    // (or (= (+ p15 ) 1 )(= (+ p14 ) 1 )(= (+ p24 ) 1 )(= (+ p25 ) 1 ))
-
+    
+    //If the number is 0
+    if(r==0){
+        fprintf(fp, "(and ");  
+         for(int m=0; m<9; m++){
+                 if(k+x[m] <= N && k+x[m] >=1 && j+y[m] <=M && j+y[m] >= 1){
+                        fprintf(fp, "(= r%dc%d 0) ", k+x[m], j+y[m]);
+        
+                }
+        }
+        fprintf(fp, ")");
+    }
+    //If the number is 1 ~ 9
+    else{
     if (index == r) {
         int isgood=1;
         int check[9]={0}; 
@@ -56,12 +64,10 @@ void combinationUtil(int arr[], int data[], int start, int end,
              if(check[m]!=0){
                  if(k+x[m] <= N && k+x[m] >=1 && j+y[m] <=M && j+y[m] >= 1){
                         fprintf(fp, "(= r%dc%d 1) ", k+x[m], j+y[m]);
-                        // printf("(%d, %d)\n", i+x[m], j+y[m]);
                 }
              }else{
                  if(k+x[m] <= N && k+x[m] >=1 && j+y[m] <=M && j+y[m] >= 1){
                         fprintf(fp, "(= r%dc%d 0) ", k+x[m], j+y[m]);
-                        // printf("(%d, %d)\n", i+x[m], j+y[m]);
                 }
             }
             
@@ -69,13 +75,9 @@ void combinationUtil(int arr[], int data[], int start, int end,
         fprintf(fp, ")");
         }
         return; 
+    }
     } 
      
-    // replace index with all possible elements. The condition 
-    // "end-i+1 >= r-index" makes sure that including one element 
-    // at index will make a combination with remaining elements 
-    // at remaining positions 
-  
     for (int i=start; i<=end && end-i+1 >= r-index; i++) 
     { 
         data[index] = arr[i]; 
