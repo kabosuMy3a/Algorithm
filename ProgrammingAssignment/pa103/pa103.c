@@ -345,6 +345,7 @@ int main(int argc, char* args[]){
 	fclose(fp);
 	
 	FILE * fin = popen("z3 ./pa103/Z3mbrix > ./pa103/rawbrix", "r");
+	
 	char bp[128];
 	fscanf(fin, "%s %s", bp, bp);
 	while(!feof(fin)){
@@ -448,7 +449,7 @@ void input2Grid(int inputArray[][100]){
 	FILE *fip = fopen("./pa103/input2Grid.txt","w");
 	for(int i=0 ; i< row_num ; i++){
 		for(int j=0 ; j< col_num ; j++){
-			fprintf(fip, "%d", inputArray[i][j]);
+			fprintf(fip, "%d ", inputArray[i][j]);
 		}
 		fprintf(fip,"\n");
 	}
@@ -460,7 +461,7 @@ void printOutput(int outputArray[][100]){
 	for(int i=0 ; i< row_num ; i++){
 		for(int j=0 ; j< col_num ; j++){
 			printf("%d ", outputArray[i][j]);
-			fprintf(output,"%d", outputArray[i][j]);	
+			fprintf(output,"%d ", outputArray[i][j]);	
 		}
 		fprintf(output,"\n");
 		printf("\n");
