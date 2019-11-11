@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS =
-TARGET1 = NumberCross
-OBJ1 = ./hw1.c
+TARGET1 = CNFconverter
+OBJ1 =	CNFconverter.c 
 
 all : $(TARGET1)
 
@@ -10,4 +10,4 @@ $(TARGET1) : $(OBJ1)
 
 
 clean : 
-	rm NumberCross
+	rm CNFconverter
