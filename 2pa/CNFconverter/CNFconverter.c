@@ -152,7 +152,7 @@ void ConvertToNNF(PNode* pnode){
 }
 
 
-void ApplyDistributeRule(PNode* pnode){
+void ApplyDistributeRule(PNode **root, PNode* pnode){
 	//should consider all stamp and parent 
 	PNode* grandMother = pnode->parent->parent;
 	int mothersBirthOrderStamp = pnode->parent-> birthOrderStamp;
@@ -174,50 +174,52 @@ void ApplyDistributeRule(PNode* pnode){
 		pnode->parent = grandMother;
 		pnode->birthOrderStamp = mothersBirthOrderStamp;
 	}else{
-		pnode->parent = 0x0;
+		pnode->parent =0x0;
 		pnode->birthOrderStamp =0;
-		/*how to make this node as root*/
+		*root = pnode;
 	}
 }
 
-void ConvertToCNF(PNode** pnode){
-	if (*pnode==0x0) return;
+void ConvertToCNF(PNode** root, PNode* pnode){
+	if (pnode==0x0) return;
 	
-	if(*(pnode)->type==2) return;
-	else if(*(pnode)->type==-1){
-		ConvertToCNF(&(*(pnode)->leafs[0]));
+	if(pnode->type==2) return;
+	else if(pnode->type==-1){
+		ConvertToCNF(root,pnode->leafs[0]);
 		/*We ensure that input is NNF,
 		 *so this is useless,but for using 
 		 other purpose, Maybe*/
 	}
-	else if(*(pnode)->type==0){
-		for(int i=0; i< *(pnode)->leafs_num; i++){
-			ConvertToCNF(&(*(pnode)->leafs[i]));
+	else if(pnode->type==0){
+		for(int i=0; i< pnode->leafs_num; i++){
+			ConvertToCNF(root,pnode->leafs[i]);
 		}	
 	}
-	else if(*(pnode)->type==1){	
-		if(*(pnode)->parent!=0x0){
-			if(*(pnode)->parent->type==0){
-				ApplyDistributeRule(*pnode);
-				ConvertToCNF(pnode);//Check New Family Relation.
+	else if(pnode->type==1){
+		
+		if(pnode->parent!=0x0){
+			if(pnode->parent->type==0){
+				ApplyDistributeRule(root,pnode);
+				ConvertToCNF(root,pnode);//Check New Family Relation.
 			}
 			else{
-				for(int i=0; i< *(pnode)->leafs_num; i++){
-					ConvertToCNF(&(*(pnode)->leafs[i]));
+				for(int i=0; i< pnode->leafs_num; i++){
+					ConvertToCNF(root,pnode->leafs[i]);
 				}
 			}
 		}	
 		else{
-			for(int i=0; i< *(pnode)->leafs_num; i++){
-				ConvertToCNF(&(*(pnode)->leafs[i]));
+			for(int i=0; i< pnode->leafs_num; i++){
+				ConvertToCNF(root,pnode->leafs[i]);
 			}
 		}	
 	}
+	
 }
 
 void getSolution(PNode** root){
 	ConvertToNNF(*root);
-	ConvertToCNF(root);
+	ConvertToCNF(root,*root);
 	printInorder(*root);
 	printf("\n");
 }
@@ -225,11 +227,7 @@ void getSolution(PNode** root){
 
 int main(int argc, char * argv[]){	
 	
-	/*PNode * realRoot = createPNode(1,0);	
-	PNode * root = insertOp(realRoot,0);
-	insertVar(realRoot,10);
-	//TODO: Root 처리*/ 
-	PNode* root = createPNode(0,0);	
+	PNode * root = createPNode(0,0);	
 	PNode* semi = insertOp(root, -1);	
 	insertVar(root,4);
 	semi = insertOp(semi,0);
@@ -242,10 +240,9 @@ int main(int argc, char * argv[]){
 	jaymy= insertOp(ricky,-1);
 	insertVar(jaymy,6);
 	insertVar(ricky,5);
-
+	
 	getSolution(&root);
 	
-
 	return 0;
 }
 
