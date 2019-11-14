@@ -49,11 +49,10 @@ void freePNode(PNode* pnode ){
 PNode* copyPNode(PNode* pnode){
 	PNode* copied = createPNode(pnode->type,pnode->var);
 	copied->leafs_num = pnode->leafs_num ;
-	copied->parent = 0x0;//cuz: deep-copy
+	copied->parent = pnode->parent;
 	copied->birthOrderStamp= pnode->birthOrderStamp;
 	for(int i=0; i< copied->leafs_num ; i++){
-		copied->leafs[i] = copyPNode(pnode->leafs[i]) ;
-		copied->leafs[i]->parent= copied;//자식도 카피해야되는거아니야?
+		copied->leafs[i] = pnode->leafs[i] ;
 	}
 	return copied;
 }
@@ -153,15 +152,15 @@ void ConvertToNNF(PNode* pnode){
 }
 
 
-PNode* ApplyDistributeRule(PNode **root, PNode* pnode){
+void ApplyDistributeRule(PNode **root, PNode* pnode){
 	//should consider all stamp and parent 
 	PNode* grandMother = pnode->parent->parent;
 	int mothersBirthOrderStamp = pnode->parent-> birthOrderStamp;
-	//grandma null check;	
-	PNode* temp = copyPNode(pnode->parent);
+	//grandma null check;
 	for(int i=0; i< pnode->leafs_num; i++){
-		PNode* originChild = copyPNode(pnode->leafs[i]);
-		PNode* newChild = copyPNode(temp);
+		PNode* originChild = pnode->leafs[i];
+		PNode* newChild = copyPNode(pnode->parent);
+		
 		newChild->leafs[pnode->birthOrderStamp] = originChild;
 		originChild->parent = newChild;
 		originChild->birthOrderStamp = pnode->birthOrderStamp;
@@ -171,21 +170,19 @@ PNode* ApplyDistributeRule(PNode **root, PNode* pnode){
 		newChild->birthOrderStamp = i;
 	}
 	if(grandMother!=0x0){
-		//free(pnode->parent);
 		grandMother->leafs[mothersBirthOrderStamp] = pnode;
 		pnode->parent = grandMother;
 		pnode->birthOrderStamp = mothersBirthOrderStamp;
 	}else{
-		//free(pnode->parent);
 		pnode->parent =0x0;
 		pnode->birthOrderStamp =0;
 		*root = pnode;
 	}
-	return pnode;
 }
 
 void ConvertToCNF(PNode** root, PNode* pnode){
 	if (pnode==0x0) return;
+	
 	if(pnode->type==2) return;
 	else if(pnode->type==-1){
 		ConvertToCNF(root,pnode->leafs[0]);
@@ -194,31 +191,29 @@ void ConvertToCNF(PNode** root, PNode* pnode){
 		 other purpose, Maybe*/
 	}
 	else if(pnode->type==0){
-		for(int i=0 ; i < pnode->leafs_num; i++){
-			
-			if(pnode->leafs[i]->type ==1){
-				
-				PNode* start= ApplyDistributeRule(root,pnode->leafs[i]);
-				//printInorder(pnode);
-				printf("\n");
-				if(start->parent ==0x0){
-					ConvertToCNF(root,start);
-				}else{
-					ConvertToCNF(root,start->parent);
-				}
-				break;
-			}
-			else{
-				ConvertToCNF(root,pnode->leafs[i]);
-			}
-		}		
-	}
-	else if(pnode->type==1){	
-		/*we guarantee that parent is not OR*/
 		for(int i=0; i< pnode->leafs_num; i++){
 			ConvertToCNF(root,pnode->leafs[i]);
-		}		
+		}	
 	}
+	else if(pnode->type==1){	
+		if(pnode->parent!=0x0){
+			if(pnode->parent->type==0){
+				ApplyDistributeRule(root,pnode);
+				ConvertToCNF(root,pnode);//Check New Family Relation.
+			}
+			else{
+				for(int i=0; i< pnode->leafs_num; i++){
+					ConvertToCNF(root,pnode->leafs[i]);
+				}
+			}
+		}	
+		else{
+			for(int i=0; i< pnode->leafs_num; i++){
+				ConvertToCNF(root,pnode->leafs[i]);
+			}
+		}	
+	}
+	
 }
 
 void getSolution(PNode** root){
@@ -244,8 +239,8 @@ void case1(){
 	insertVar(jaymy,6);
 	insertVar(ricky,5);
 	
-	//printInorder(root);
-	//printf("\n\n");
+	printInorder(root);
+	printf("\n\n");
 	getSolution(&root);
 	
 }
@@ -262,8 +257,8 @@ void case2(){
 	insertVar(level_2,5);
 	insertVar(level_3,6);
 	
-	//printInorder(root);
-	//printf("\n\n");
+	printInorder(root);
+	printf("\n\n");
 	getSolution(&root);
 	
 }
@@ -280,8 +275,11 @@ void case3(){
 	insertVar(level_2,4);
 	insertVar(level_2,5);
 	insertVar(level_3,6);
-	//printInorder(root);
-	//printf("\n\n");
+
+		
+
+	printInorder(root);
+	printf("\n\n");
 	getSolution(&root);
 }
 
@@ -296,8 +294,8 @@ void case4(){
 	insertVar(level_2,1);
 	insertVar(level_2,2);
 
-	//printInorder(root);
-	//printf("\n\n");
+	printInorder(root);
+	printf("\n\n");
 	getSolution(&root);
 
 
@@ -314,8 +312,8 @@ void case5(){
 	insertVar(level_2,3);
 	insertVar(level_2,4);
 
-	//printInorder(root);
-	//printf("\n\n");
+	printInorder(root);
+	printf("\n\n");
 	getSolution(&root);
 
 }
@@ -333,8 +331,8 @@ void case6(){
 	insertVar(level_2_2,4);
 	insertVar(level_2_2,5);
 
-	//printInorder(root);
-	//printf("\n\n");
+	printInorder(root);
+	printf("\n\n");
 	getSolution(&root);
 }
 
@@ -353,8 +351,8 @@ void case7(){
 	insertVar(level_2_3,4);
 	insertVar(level_2_3,5);
 
-	//printInorder(root);
-	//printf("\n\n");
+	printInorder(root);
+	printf("\n\n");
 	getSolution(&root);
 }
 
@@ -374,68 +372,33 @@ void case8(){
 	insertVar(level_3_1,6);
 
 	
-	//printInorder(root);
-	//printf("\n\n");
+	printInorder(root);
+	printf("\n\n");
 	getSolution(&root);
 }
 
-void case9(){
-	PNode * root = createPNode(0,0);	
-	PNode * level_1_1 = insertOp(root,1);
-	PNode * level_1_2 = insertOp(root,0);
-	insertVar(level_1_1,3);
-	PNode * level_2 = insertOp(level_1_1,1);
-	insertVar(level_1_2,4);
-	insertVar(level_1_2,5);
-	insertVar(level_2,1);
-	insertVar(level_2,2);
-
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-
-
-}
-
-void caseSimple(){
-	PNode * root = createPNode(0,0);	
-	PNode * level_1_1 = insertOp(root,1);
-	PNode * level_1_2 = insertOp(root,1);
-	insertVar(level_1_2,2);
-	insertVar(level_1_1,4);
-	insertVar(level_1_2,1);
-	insertVar(level_1_1,3);
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-
-}
 
 
 int main(int argc, char * argv[]){	
-
-
-	case1();
-	printf("\n");
-	case2();
-	printf("\n");
-	case3();
-	printf("\n");
-	case4();
-	printf("\n");
-	case5();
-	printf("\n");
-	case6();
-	printf("\n");
-	case7();
-	printf("\n");
-	case8();
-	printf("\n");
-	case9();
-	printf("\n");
-	caseSimple();
-	printf("\n");
+	/*
+	PNode * root = createPNode(0,0);	
+	PNode* semi = insertOp(root, -1);	
+	insertVar(root,4);
+	semi = insertOp(semi,0);
+	PNode* jaymy = insertOp(semi,-1);
+	insertVar(semi,3);
+	PNode* ricky = insertOp(semi, 1);
+	jaymy= insertOp(jaymy,0);
+	insertVar(jaymy,1);
+	insertVar(jaymy,2);
+	jaymy= insertOp(ricky,-1);
+	insertVar(jaymy,6);
+	insertVar(ricky,5);
 	
+	getSolution(&root);
+	*/
+
+	case4();
 	return 0;
 }
 
