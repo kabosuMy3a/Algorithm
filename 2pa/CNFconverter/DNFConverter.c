@@ -6,7 +6,7 @@ typedef struct t_pnode PNode;
 
 struct t_pnode/*propostion node*/{
 	
-	int type;/* -1= not, 0=or, 1=and, 2=var */
+	int type;/* -1= not, 0=and, 1=or, 2=var */
 	int var ;/*if type=2, var,,negative means not
 		   else fix to 0*/ 
 	int leafs_num ;
@@ -184,11 +184,11 @@ PNode* ApplyDistributeRule(PNode **root, PNode* pnode){
 	return pnode;
 }
 
-void ConvertToCNF(PNode** root, PNode* pnode){
+void ConvertToDNF(PNode** root, PNode* pnode){
 	if (pnode==0x0) return;
 	if(pnode->type==2) return;
 	else if(pnode->type==-1){
-		ConvertToCNF(root,pnode->leafs[0]);
+		ConvertToDNF(root,pnode->leafs[0]);
 		/*We ensure that input is NNF,
 		 *so this is useless,but for using 
 		 other purpose, Maybe*/
@@ -202,231 +202,31 @@ void ConvertToCNF(PNode** root, PNode* pnode){
 				//printInorder(pnode);
 				printf("\n");
 				if(start->parent ==0x0){
-					ConvertToCNF(root,start);
+					ConvertToDNF(root,start);
 				}else{
-					ConvertToCNF(root,start->parent);
+					ConvertToDNF(root,start->parent);
 				}
 				break;
 			}
 			else{
-				ConvertToCNF(root,pnode->leafs[i]);
+				ConvertToDNF(root,pnode->leafs[i]);
 			}
 		}		
 	}
 	else if(pnode->type==1){	
-		/*we guarantee that parent is not OR*/
 		for(int i=0; i< pnode->leafs_num; i++){
-			ConvertToCNF(root,pnode->leafs[i]);
+			ConvertToDNF(root,pnode->leafs[i]);
 		}		
 	}
 }
 
 void getSolution(PNode** root){
 	ConvertToNNF(*root);
-	ConvertToCNF(root,*root);
+	ConvertToDNF(root,*root);
 	printInorder(*root);
-	printf("\n");
+	printf("\n0\n");
 }
 
-void case1(){
-
-	PNode * root = createPNode(0,0);	
-	PNode* semi = insertOp(root, -1);	
-	insertVar(root,4);
-	semi = insertOp(semi,0);
-	PNode* jaymy = insertOp(semi,-1);
-	insertVar(semi,3);
-	PNode* ricky = insertOp(semi, 1);
-	jaymy= insertOp(jaymy,0);
-	insertVar(jaymy,1);
-	insertVar(jaymy,2);
-	jaymy= insertOp(ricky,-1);
-	insertVar(jaymy,6);
-	insertVar(ricky,5);
-	
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-	
-}
-void case2(){
-
-	PNode * root = createPNode(0,0);	
-	PNode * level_1 = insertOp(root,1);
-	PNode * level_2 = insertOp(root,1);
-	PNode * level_3 = insertOp(root,-1);
-	insertVar(level_1,1);
-	insertVar(level_1,2);
-	insertVar(level_1,3);
-	insertVar(level_2,4);
-	insertVar(level_2,5);
-	insertVar(level_3,6);
-	
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-	
-}
-
-void case3(){
-
-	PNode * root = createPNode(0,0);	
-	PNode * level_1 = insertOp(root,1);
-	PNode * level_2 = insertOp(root,0);
-	PNode * level_3 = insertOp(root,-1);
-	insertVar(level_1,1);
-	insertVar(level_1,2);
-	insertVar(level_1,3);
-	insertVar(level_2,4);
-	insertVar(level_2,5);
-	insertVar(level_3,6);
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-}
-
-void case4(){
-	PNode * root = createPNode(0,0);	
-	PNode * level_1_1 = insertOp(root,1);
-	PNode * level_1_2 = insertOp(root,0);
-	PNode * level_2 = insertOp(level_1_1,1);
-	insertVar(level_1_2,4);
-	insertVar(level_1_2,5);
-	insertVar(level_1_1,3);
-	insertVar(level_2,1);
-	insertVar(level_2,2);
-
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-
-
-}
-
-void case5(){
-	PNode * root = createPNode(0,0);	
-	PNode * level_1_1 = insertOp(root,1);
-	PNode * level_1_2 = insertOp(root,0);
-	PNode * level_2 = insertOp(level_1_2,1);
-	insertVar(level_1_2,5);
-	insertVar(level_1_1,1);
-	insertVar(level_1_1,2);
-	insertVar(level_2,3);
-	insertVar(level_2,4);
-
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-
-}
-
-void case6(){
-	PNode * root = createPNode(1,0);	
-	PNode * level_1_1 = insertOp(root,0);
-	PNode * level_1_2 = insertOp(root,0);
-	PNode * level_2_1 = insertOp(level_1_1,1);
-	PNode * level_2_2 = insertOp(level_1_2,1);
-	insertVar(level_1_2,3);
-	insertVar(level_1_1,6);
-	insertVar(level_2_1,1);
-	insertVar(level_2_1,2);
-	insertVar(level_2_2,4);
-	insertVar(level_2_2,5);
-
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-}
-
-void case7(){
-	PNode * root = createPNode(1,0);	
-	PNode * level_1_1 = insertOp(root,0);
-	PNode * level_1_2 = insertOp(root,0);
-	PNode * level_2_1 = insertOp(level_1_1,1);
-	PNode * level_2_2 = insertOp(level_1_1,1);
-	PNode * level_2_3 = insertOp(level_1_2,1);
-	insertVar(level_1_2,3);
-	insertVar(level_2_1,1);
-	insertVar(level_2_1,2);
-	insertVar(level_2_2,6);
-	insertVar(level_2_2,7);
-	insertVar(level_2_3,4);
-	insertVar(level_2_3,5);
-
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-}
-
-void case8(){
-
-	PNode * root = createPNode(1,0);	
-	PNode * level_1_1 = insertOp(root,0);
-	PNode * level_2_1 = insertOp(level_1_1,1);
-	PNode * level_2_2 = insertOp(level_1_1,0);
-	PNode * level_3_1 = insertOp(level_2_2,1);
-		
-	insertVar(root,3);
-	insertVar(level_2_1,1);
-	insertVar(level_2_1,2);
-	insertVar(level_2_2,4);
-	insertVar(level_3_1,5);
-	insertVar(level_3_1,6);
-
-	
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-}
-
-void case9(){
-	PNode * root = createPNode(0,0);	
-	PNode * level_1_1 = insertOp(root,1);
-	PNode * level_1_2 = insertOp(root,0);
-	insertVar(level_1_1,3);
-	PNode * level_2 = insertOp(level_1_1,1);
-	insertVar(level_1_2,4);
-	insertVar(level_1_2,5);
-	insertVar(level_2,1);
-	insertVar(level_2,2);
-
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-
-
-}
-
-void caseSimple(){
-	PNode * root = createPNode(0,0);	
-	PNode * level_1_1 = insertOp(root,1);
-	PNode * level_1_2 = insertOp(root,1);
-	insertVar(level_1_2,2);
-	insertVar(level_1_1,4);
-	insertVar(level_1_2,1);
-	insertVar(level_1_1,3);
-	//printInorder(root);
-	//printf("\n\n");
-	getSolution(&root);
-
-}
-
-void caseFinal(){
-	PNode * root = createPNode(0,0);
-	insertVar(root,1);
-	PNode * level_1_1 = insertOp(root,0);
-	insertVar(level_1_1,2);
-	PNode * nota = insertOp(level_1_1,-1);
-	PNode * orta  = insertOp(nota,0);
-	PNode * oorta = insertOp(orta,0);
-	insertVar(orta, 5);
-	//printInorder(root);
-	insertVar(oorta,3);
-	insertVar(oorta,4);
-	getSolution(&root);
-	//printf("\n\n");
-	
-}
 
 typedef struct t_stack PStack;
 
@@ -486,21 +286,21 @@ PNode* input2Tree(){
 			}
 			else if(d=='o'){
 				if(i==0){
-				       	root->type=0;
-					nowde = root ;
-				}
-				else{
-					nowde = insertOp(nowde,0);
-				}
-
-			}
-			else if(d=='a'&& lines[i+2]=='n'){
-				if(i==0){
 				       	root->type=1;
 					nowde = root ;
 				}
 				else{
 					nowde = insertOp(nowde,1);
+				}
+
+			}
+			else if(d=='a'&& lines[i+2]=='n'){
+				if(i==0){
+				       	root->type=0;
+					nowde = root ;
+				}
+				else{
+					nowde = insertOp(nowde,0);
 				}
 			}
 
@@ -543,31 +343,7 @@ PNode* input2Tree(){
 int main(int argc, char * argv[]){	
 	
 	PNode* root = input2Tree();
-	getSolution(&root);	
-	/*
-	case1();
-	printf("\n");
-	case2();
-	printf("\n");
-	case3();
-	printf("\n");
-	case4();
-	printf("\n");
-	case5();
-	printf("\n");
-	case6();
-	printf("\n");
-	case7();
-	printf("\n");
-	case8();
-	printf("\n");
-	case9();
-	printf("\n");
-	caseSimple();
-	printf("\n");
-	caseFinal();
-	printf("\n");
-	*/
+	getSolution(&root);		
 	return 0;
 }
 
