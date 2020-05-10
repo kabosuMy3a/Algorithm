@@ -390,7 +390,7 @@ Element * pqueue_delete(Pqueue* pqueue){
 }
 
 int pqueue_peek_bound(Pqueue* pqueue){
-	assert(pqueue->index != 0);
+	if(pqueue->index == 0) return -1 ;
 	int peek = pqueue->element[1]->bound ;
 	return peek;
 }
@@ -413,17 +413,71 @@ void pqueue_tree_printer(Pqueue* pqueue){
 	printf("\n");
 }
 
-MSMB * BB_solving(Item** items, int size){
+void calculate_bound(Item** items, int size, Element* element){
+	int tot_weight = 0;
+	int idx = element->item_index ;
+	int W = size * 40 ;
+	int bound = 0 ;
+	int i = 0 ; int j = 0;
+	
+	tot_weight += element-> uw ;
+	for(i = idx+1 ; i < size ; i++){
+		if(tot_weight+items[i]->weight > W) break;
+		else tot_weight += items[i]->weight ;
+	}	
+	
+	bound += element->ub ;
+	for(j = idx+1 ; j <= i-1 ; j++){
+		bound += items[j]->benefit;
+	}
+
+	if(i != size){
+		float temp = (float)items[i]->benefit/ items[i]->weight ;
+	       	temp *= (W-tot_weight) ;
+		bound += (int)temp ;
+	}
+	element->bound = bound;
+}
+
+MSMB * BB_solving(Item** itemV, int size){
 	clock_t start = clock();
+	Item ** sorted_items = make_sorted_item_list(itemV,size);
 	float lastB = 0 ;
 	int max_benefit = 0;
 	Pqueue * pqueue = create_pqueue(size);
-	
-
-
-
+	Element * init1 = create_element(0,sorted_items[0]->benefit,sorted_items[0]->weight,0);
+	Element * init_1 = create_element(0, 0, 0, 0);
+	calculate_bound(sorted_items, size, init1);
+	calculate_bound(sorted_items, size, init_1);
+	pqueue_insert(pqueue, init1);
+	pqueue_insert(pqueue, init_1);
+	//int k = 0;
+	while(1){
+	//	printf("\n%d, %d \n", k++, max_benefit);
+		if(max_benefit > pqueue_peek_bound(pqueue)) break;
+		if(pqueue_peek_bound(pqueue) == -1) break;
+		
+		Element * popped = pqueue_delete(pqueue);
+		int idx = popped->item_index ;
+		int ub = popped->ub;
+		int uw = popped->uw;
+		if(max_benefit < ub) max_benefit = ub ;
+		if(idx!=size -1){
+			Element * choosen_element = create_element(idx+1, ub+sorted_items[idx+1]->benefit, uw+sorted_items[idx+1]->weight, 0);
+			Element * not_choosen_element = create_element(idx+1, ub, uw, 0);
+			calculate_bound(sorted_items, size, choosen_element);
+			calculate_bound(sorted_items, size, not_choosen_element);
+			pqueue_insert(pqueue, choosen_element);
+			pqueue_insert(pqueue, not_choosen_element);
+		}
+	//	pqueue_tree_printer(pqueue);
+		free(popped);	
+	}
 
 	free_pqueue(pqueue);
+	delete_item_list(sorted_items, size);
+	
+	lastB = (float)max_benefit;
 	int pt = time_formatter(start, clock());
 	MSMB * msmb = create_msmb(pt, lastB);
 	return msmb ;
@@ -456,14 +510,14 @@ void DP_solver(){
 
 void BB_solver(){
 	BB_msmb[0] = BB_solving(items_10, 10 );
-//	BB_msmb[1] = BB_solving(items_100, 100 );
-//	BB_msmb[2] = BB_solving(items_500, 500 );
-//	BB_msmb[3] = BB_solving(items_1000, 1000 );
-//	BB_msmb[4] = BB_solving(items_3000, 3000 );
-//	BB_msmb[5] = BB_solving(items_5000, 5000 );
-//	BB_msmb[6] = BB_solving(items_7000, 7000 );
-//	BB_msmb[7] = BB_solving(items_9000, 9000 );
-//	BB_msmb[8] = BB_solving(items_10000, 10000 );
+	BB_msmb[1] = BB_solving(items_100, 100 );
+	BB_msmb[2] = BB_solving(items_500, 500 );
+	BB_msmb[3] = BB_solving(items_1000, 1000 );
+	BB_msmb[4] = BB_solving(items_3000, 3000 );
+	BB_msmb[5] = BB_solving(items_5000, 5000 );
+	BB_msmb[6] = BB_solving(items_7000, 7000 );
+	BB_msmb[7] = BB_solving(items_9000, 9000 );
+	BB_msmb[8] = BB_solving(items_10000, 10000 );
 }
 
 void create_test_case(){
@@ -510,8 +564,8 @@ int main(){
 	alarm(3600);
 	create_test_case();
 	greedy_solver();
-	//DP_solver();
 	BB_solver();
+	DP_solver();
 	dispose_program();
 	return 0;
 }
