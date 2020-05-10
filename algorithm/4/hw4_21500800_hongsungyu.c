@@ -533,7 +533,6 @@ void create_test_case(){
 	items_7000 = create_item_list(7000);
 	items_9000 = create_item_list(9000);
 	items_10000 = create_item_list(10000);
-
 }
 
 void delete_test_case(){
@@ -564,11 +563,12 @@ int main(){
 	//This program gurantee the total exucution time is not over an hour. 
 	signal(SIGALRM, sigalrm_handler);
 	signal(SIGINT, sigalrm_handler);
+	signal(SIGKILL, sigalrm_handler);
 	alarm(3600);
 	create_test_case();
 	greedy_solver();
-	BB_solver();
 	DP_solver();
+	BB_solver();
 	dispose_program();
 	return 0;
 }
