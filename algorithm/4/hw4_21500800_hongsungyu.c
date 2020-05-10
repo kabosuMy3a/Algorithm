@@ -6,6 +6,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <signal.h>
+#include <assert.h>
 
 typedef struct item Item ;
 
@@ -239,19 +240,196 @@ MSMB * DP_solving(Item** items, int size){
 	int pt = time_formatter(start, clock());
 	MSMB * msmb = create_msmb(pt, lastB);
 	return msmb ;
+	}
+
+// BB Algorithm implementation
+
+// Priority Max queue which is implemented by heap is used.
+typedef struct element Element ;
+typedef struct pqueue Pqueue ;
+
+struct element{
+	int item_index ; // 0 to size-1
+	int ub ; // Benefit up to 
+	int uw ; // Weight up to
+	int bound ; //bound is key for pqueue, decimal point of b/w is abanadoned
+};
+
+Element * create_null_element(){
+	Element * element = (Element*) malloc(sizeof(Element));
+	element->item_index = 0;
+	element->ub = 0;
+	element->uw = 0;
+	element->bound = 0;
+	return element ;
 }
 
-//BB Algorithm implementation
+Element * create_element(int index, int ub, int uw, int bound){
+	Element * element = (Element*) malloc(sizeof(Element));
+	element->item_index = index;
+	element->ub = ub;
+	element->uw = uw;
+	element->bound = bound;
+	return element;
+}
+
+void free_element(Element* element){
+	assert(element!=0x0);
+	free(element);
+}
+
+Element * copy_element(Element * source){
+	return create_element(source->item_index, source->ub, source->uw, source->bound);
+}
+
+void swap_element(Element * A, Element * B){
+	Element * temp = create_null_element();
+	temp->item_index = A->item_index;
+	temp->ub = A->ub;
+	temp->uw = A->uw;
+	temp->bound = A->bound;
+	A->item_index = B->item_index;
+	A->ub = B->ub;
+	A->uw = B->uw;
+	A->bound = B->bound;
+	B->item_index = temp->item_index;
+	B->ub = temp->ub;
+	B->uw = temp->uw;
+	B->bound = temp->bound;
+	free_element(temp);
+}
+
+void print_element(Element * element){
+	printf("[ix: %d ub: %d uw: %d b: %d]",
+			element->item_index,
+			element->ub,
+			element->uw,
+			element->bound);
+}
+ 
+
+struct pqueue{
+	int index ; 
+	int capacity ;
+	Element ** element ;
+};
+
+Pqueue * create_pqueue(int item_size){
+	Pqueue * pqueue = (Pqueue*) malloc(sizeof(Pqueue));
+	assert(pqueue!=0x0);
+	pqueue->index = 0;
+	pqueue->capacity = item_size * 100 ; 
+	pqueue->element = (Element**) malloc(sizeof(Element *) * pqueue->capacity);
+	return pqueue ;
+}
+
+void free_pqueue(Pqueue* pqueue){
+	for(int i= 1 ; i <= pqueue->index ; i++){
+		free_element(pqueue->element[i]);
+	}
+	free(pqueue);
+}
+
+int isfull(Pqueue* pqueue){
+	return (pqueue->index == pqueue->capacity) ? 1 : 0 ;
+}
+
+
+int extension_log = 0 ; //debug
+void pqueue_extension(Pqueue* pqueue){
+	extension_log++; //debug
+	pqueue->capacity *= 2;
+	pqueue->element = (Element**) realloc(pqueue->element,
+			sizeof(Element*) * (pqueue->capacity));
+}
+
+void bottomup_balancing(Pqueue* pqueue, int index){
+	int new_index = index;
+	while(new_index > 1){
+		int old_index = new_index;
+		new_index  = new_index/2 ;
+		if(pqueue->element[old_index]->bound > pqueue->element[new_index]-> bound){
+			swap_element(pqueue->element[old_index], pqueue->element[new_index]);
+		} else break;
+	}
+}
+
+void pqueue_insert(Pqueue* pqueue, Element * element){
+	if(isfull(pqueue)==1) pqueue_extension(pqueue);
+	pqueue->element[++pqueue->index] = element;
+	bottomup_balancing(pqueue, pqueue->index);
+}
+
+void topdown_balancing(Pqueue* pqueue, int index){
+	int new_index = index ;
+	while(1){
+		int old_index = new_index ;
+		new_index *= 2;
+		if(new_index > pqueue->index) break;
+		else if(new_index == pqueue->index){
+		} else {
+			if(pqueue->element[new_index]->bound
+				       	< pqueue->element[new_index+1]->bound)
+				new_index += 1;		
+		}
+		if(pqueue->element[old_index]->bound < pqueue->element[new_index]->bound){
+			swap_element(pqueue->element[old_index], pqueue->element[new_index]);
+		} else break;
+	}
+}
+
+Element * pqueue_delete(Pqueue* pqueue){
+	assert(pqueue->index !=0);
+	swap_element(pqueue->element[1], pqueue->element[pqueue->index]);
+	
+	Element * popped = copy_element(pqueue->element[pqueue->index]);
+	free(pqueue->element[pqueue->index]);
+	pqueue->index -= 1;
+	topdown_balancing(pqueue, 1);
+	return popped ;
+}
+
+int pqueue_peek_bound(Pqueue* pqueue){
+	assert(pqueue->index != 0);
+	int peek = pqueue->element[1]->bound ;
+	return peek;
+}
+
+void pqueue_tree_printer(Pqueue* pqueue){
+	if(pqueue->index==0){
+		printf("This pqueue is empty\n");
+		return;
+	}
+	int timing = 1; int growth = 2;
+	for(int i =1 ; i<=pqueue->index ; i++){
+		Element * element = pqueue->element[i];
+		if(i==timing+1){
+			printf("\n");
+			timing+= growth;
+			growth *= 2;
+		}
+		print_element(element);
+	}
+	printf("\n");
+}
 
 MSMB * BB_solving(Item** items, int size){
 	clock_t start = clock();
 	float lastB = 0 ;
+	int max_benefit = 0;
+	Pqueue * pqueue = create_pqueue(size);
 	
+
+
+
+
+	free_pqueue(pqueue);
 	int pt = time_formatter(start, clock());
 	MSMB * msmb = create_msmb(pt, lastB);
 	return msmb ;
 }
 
+//solvers
 void greedy_solver(){
 	greedy_msmb[0] = greedy_solving(items_10, 10 );
 	greedy_msmb[1] = greedy_solving(items_100, 100 );
@@ -278,14 +456,14 @@ void DP_solver(){
 
 void BB_solver(){
 	BB_msmb[0] = BB_solving(items_10, 10 );
-	BB_msmb[1] = BB_solving(items_100, 100 );
-	BB_msmb[2] = BB_solving(items_500, 500 );
-	BB_msmb[3] = BB_solving(items_1000, 1000 );
-	BB_msmb[4] = BB_solving(items_3000, 3000 );
-	BB_msmb[5] = BB_solving(items_5000, 5000 );
-	BB_msmb[6] = BB_solving(items_7000, 7000 );
-	BB_msmb[7] = BB_solving(items_9000, 9000 );
-	BB_msmb[8] = BB_solving(items_10000, 10000 );
+//	BB_msmb[1] = BB_solving(items_100, 100 );
+//	BB_msmb[2] = BB_solving(items_500, 500 );
+//	BB_msmb[3] = BB_solving(items_1000, 1000 );
+//	BB_msmb[4] = BB_solving(items_3000, 3000 );
+//	BB_msmb[5] = BB_solving(items_5000, 5000 );
+//	BB_msmb[6] = BB_solving(items_7000, 7000 );
+//	BB_msmb[7] = BB_solving(items_9000, 9000 );
+//	BB_msmb[8] = BB_solving(items_10000, 10000 );
 }
 
 void create_test_case(){
@@ -328,10 +506,11 @@ int main(){
 	srand(time(0x0));
 	//This program gurantee the total exucution time is not over an hour. 
 	signal(SIGALRM, sigalrm_handler);
+	signal(SIGINT, sigalrm_handler);
 	alarm(3600);
 	create_test_case();
 	greedy_solver();
-	DP_solver();
+	//DP_solver();
 	BB_solver();
 	dispose_program();
 	return 0;
