@@ -1,4 +1,6 @@
-//This program works for Greedy, DP, and Branch and Bound soultions.
+// This program works for Greedy, DP, and Branch and Bound soultions.
+// Target OS of this program is linux. it has dependency.
+// unistd, and signal which is one of linux system calls are used.
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -7,7 +9,7 @@
 
 typedef struct item Item ;
 
-//for keeping memory, don't store b/w
+//for keeping memory, b/w is not stored
 struct item{
 	int benefit ;
 	int weight ;
@@ -75,7 +77,6 @@ void print_item_list(Item** items, int size){
 
 //for use descendant qsort library
 int static compare_descendant(const void * first, const void * second){
-
 	const Item * one = *(Item**)first ;
 	const Item * two = *(Item**)second ;
 
@@ -151,7 +152,7 @@ void make_output_file(){
        	for(int i = 0 ; i< 9 ; i++){
 		fprintf(fp,"   %d    | ", item_num[i]);
 		if(greedy_msmb[i] != 0x0)
-			fprintf(fp,"%d / %.2f | ", greedy_msmb[i]->ms, greedy_msmb[i]->max_benefit);
+			fprintf(fp,"%d / %.0f | ", greedy_msmb[i]->ms, greedy_msmb[i]->max_benefit);
 		else 
 			fprintf(fp,"X / X | " );
 		if(DP_msmb[i] != 0x0)
@@ -195,10 +196,46 @@ MSMB* greedy_solving(Item** items, int size){
 
 //DP Algorithm implementation
 
+void store(Item * item, int * from, int * to, int w){
+	int wi = item->weight ;
+	int bi = item->benefit ;
+	if(wi <= w){
+		if(bi+ from[w-wi] > from[w]) /* input is better */{
+			to[w] = bi + from[w-wi];
+		} else {
+			to[w] = from[w] ;
+		}		
+	} else {
+		to[w] = from[w] ; 
+	}
+}
+
 MSMB * DP_solving(Item** items, int size){
 	clock_t start = clock();
-	float lastB = 0 ;
-	
+	int MAX_W = size * 40 ;
+	int first[MAX_W+1] ; //index [0 to MAX_W]
+	int second[MAX_W+1] ; // index[MAX_W] is a soultion
+	for(int i = 0; i <= MAX_W ; i++){
+		first[i] = 0 ;
+		second[i] = 0 ;
+	}
+	int store_guide = 0; 
+	for(int i = 1 ; i <= size ; i ++){
+		Item * item = items[i-1] ;
+		for(int w = 1 ; w <= MAX_W ; w++){
+			if(store_guide ==0) /*first to second*/ {
+				store(item, first, second, w);
+			} else /*second to first */{
+				store(item, second, first, w);
+			}
+		}	
+		store_guide ^= 0x01 ;
+	}
+
+	float lastB = (store_guide == 0) 
+		? (float)first[MAX_W] 
+		: (float)second[MAX_W] ;
+
 	int pt = time_formatter(start, clock());
 	MSMB * msmb = create_msmb(pt, lastB);
 	return msmb ;
