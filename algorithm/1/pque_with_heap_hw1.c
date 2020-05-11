@@ -139,7 +139,8 @@ void heap_delete(ArrayHeap * heap){
 	swap_element(heap->element[1], heap->element[heap->index]);
 	print_element(heap->element[heap->index]);
 	printf("is deleted.\n");
-	heap->element[heap->index] = create_null_element();
+	//heap->element[heap->index] = create_null_element();
+	free(heap->element[heap->index]);
 	heap->index = heap->index -1;
 	//swap first element and last element
 	topdown_balancing(heap, 1);	

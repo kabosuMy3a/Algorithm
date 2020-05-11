@@ -166,7 +166,6 @@ void make_output_file(){
 			fprintf(fp,"X / X\n" );	
 	}
 	fclose(fp);
-	free_solutions();
 }
 
 //Greedy Algorithm implementation
@@ -240,7 +239,7 @@ MSMB * DP_solving(Item** items, int size){
 	int pt = time_formatter(start, clock());
 	MSMB * msmb = create_msmb(pt, lastB);
 	return msmb ;
-	}
+}
 
 // BB Algorithm implementation
 
@@ -549,6 +548,7 @@ void delete_test_case(){
 
 void dispose_program(){
 	make_output_file();
+	free_solutions();
 	delete_test_case();
 }
 
@@ -563,12 +563,12 @@ int main(){
 	//This program gurantee the total exucution time is not over an hour. 
 	signal(SIGALRM, sigalrm_handler);
 	signal(SIGINT, sigalrm_handler);
-	signal(SIGKILL, sigalrm_handler);
 	alarm(3600);
 	create_test_case();
 	greedy_solver();
 	DP_solver();
-	BB_solver();
+	make_output_file();// This program ensures DP always make answer
+	BB_solver(); // In tricky case, BB is not solved.  
 	dispose_program();
 	return 0;
 }
