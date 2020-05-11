@@ -466,9 +466,9 @@ MSMB * BB_solving(Item** itemV, int size){
 			Element * not_choosen_element = create_element(idx+1, ub, uw, 0);
 			calculate_bound(sorted_items, size, choosen_element);
 			calculate_bound(sorted_items, size, not_choosen_element);
-			if(choosen_element->uw <= size * 40 && choosen_element->bound >= max_benefit) //non-promising 
+			if(choosen_element->uw <= size * 40 && choosen_element->bound > max_benefit) //promising 
 				pqueue_insert(pqueue, choosen_element);
-			if(not_choosen_element->bound >= max_benefit) //non-promising
+			if(not_choosen_element->bound > max_benefit) //promising
 				pqueue_insert(pqueue, not_choosen_element);
 		}
 	//	pqueue_tree_printer(pqueue);
