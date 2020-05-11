@@ -516,6 +516,7 @@ void BB_solver(){
 	BB_msmb[2] = BB_solving(items_500, 500 );
 	BB_msmb[3] = BB_solving(items_1000, 1000 );
 	BB_msmb[4] = BB_solving(items_3000, 3000 );
+	make_output_file();
 	BB_msmb[5] = BB_solving(items_5000, 5000 );
 	BB_msmb[6] = BB_solving(items_7000, 7000 );
 	BB_msmb[7] = BB_solving(items_9000, 9000 );
