@@ -105,10 +105,6 @@ Item** make_sorted_item_list(Item** items, int size){
 int time_formatter(clock_t start, clock_t end){
 	//int ms = (int)(end-start); //microseconds 
 	int ms = (int)(end-start)/1000;
-	if(ms >= 1000){
-		ms = (ms+500)/1000 ;
-		ms *= 1000 ;
-	} //miliseconds
 	return ms ;
 } 
 
@@ -153,7 +149,7 @@ void make_output_file(){
        	for(int i = 0 ; i< 9 ; i++){
 		fprintf(fp,"   %d    | ", item_num[i]);
 		if(greedy_msmb[i] != 0x0)
-			fprintf(fp,"%d / %.0f | ", greedy_msmb[i]->ms, greedy_msmb[i]->max_benefit);
+			fprintf(fp,"%d / %.3f | ", greedy_msmb[i]->ms, greedy_msmb[i]->max_benefit);
 		else 
 			fprintf(fp,"X / X | " );
 		if(DP_msmb[i] != 0x0)
